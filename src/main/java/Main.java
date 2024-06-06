@@ -44,19 +44,26 @@ public class Main {
 
         checkNull.put('a', a);
         checkNull.put('b', b);
-        checkNull.put('c', c);
+        checkNull.put(null, c);
         checkNull.put('d', d);
 
+        System.out.println(checkNull.size());
+
         System.out.println(checkNull.get('a'));
-        System.out.println(checkNull.get('b'));
+        System.out.println(checkNull.get(null));
         System.out.println(checkNull.get('c'));
         System.out.println(checkNull.get('d'));
-
-        checkNull.put('c',null);
-        System.out.println("++++++++++");
-        System.out.println(checkNull.get('c'));
-
-        checkNull.put('q',q);
+//
+//        checkNull.put('c',null);
+//        System.out.println("++++++++++");
+//        System.out.println(checkNull.get('c'));
+//
+//       // checkNull.put('q',q);
+//        System.out.println(checkNull.size());
+//        Character qq = 'a';
+//        Character ww = 'c';
+//        System.out.println(qq.hashCode()%7);
+//        System.out.println(ww.hashCode()%7);
 
 
 

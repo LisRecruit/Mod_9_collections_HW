@@ -30,7 +30,38 @@ public class MyMap<K, V> {
 
 
 
-        int index = calculateIndex(key.hashCode());
+        int index = calculateIndex(key);
+        if (key == null){
+           if (context[index]==null){
+               context[index] = newEntry;
+           } else {
+               Entry<K, V> current = context[index];
+
+               do {
+
+                   if (current.key==null) {
+                       current.value = value;
+                       //current.bucketIndex=index;
+
+                       return;
+                   }
+                   if (current.next == null) {
+                       current.next = newEntry;
+                       //current.next.bucketIndex=index;
+                   }
+                   current = current.next;
+
+               } while (current != null);
+           }
+           size++;
+           return;
+        }
+
+
+
+
+
+
         if (context[index] == null) {
             context[index] = newEntry;
 
@@ -39,7 +70,7 @@ public class MyMap<K, V> {
 
             do {
 
-                if (current.key.equals(key)) {
+                if (current.key!=null && current.key.equals(key)) {
                     current.value = value;
                     //current.bucketIndex=index;
                     return;
@@ -47,6 +78,7 @@ public class MyMap<K, V> {
                 if (current.next == null) {
                     current.next = newEntry;
                     //current.next.bucketIndex=index;
+                    return;
                 }
                 current = current.next;
 
@@ -60,33 +92,34 @@ public class MyMap<K, V> {
     }
 
     public V get(K key) {
-        try {
+        int index = calculateIndex(key);
+        if (context[index]!=null) {
+            if (key != null) {
 
+                if (context[index] != null && context[index].key.equals(key)) {
+                    return context[index].value;
+                } else {
+                    Entry<K, V> current = context[0];
 
-            int index = calculateIndex(key.hashCode());
-            if (context[index].equals(key)) {
-                return context[index].value;
+                    do {
+                        if (current.key.equals(key)) {
+                            return current.value;
+                        }
+                        current = current.next;
+                    } while (current != null);
+                    return null;
+
+                }
             } else {
                 Entry<K, V> current = context[index];
-
-                do {
-                    if (current.key.equals(key)) {
-                        return current.value;
-                    }
-                    current = current.next;
-                } while (current != null);
-               return null;
+                if (current.value != null && current.key == null) {
+                    return current.value;
+                }
+                System.out.print("Key not found ");
 
             }
-        } catch (NullPointerException e) {
-            Entry<K, V> current = context[0];
-            if (current.value!=null&&current.key==null){
-                return current.value;
-            }
-            System.out.print("Key not found ");
-            return null;
         }
-
+        return null;
     }
 
 
@@ -100,7 +133,7 @@ public class MyMap<K, V> {
     }
 
     public void remove(K key) {
-        int index = calculateIndex(key.hashCode());
+        int index = calculateIndex(key);
 
         if (context[index].equals(key)) {
             context[index] = null;
@@ -127,11 +160,11 @@ public class MyMap<K, V> {
         size--;
     }
 
-    private int calculateIndex(Integer hashCode) {
-        if (hashCode.equals(null)){
+    private int calculateIndex(K key) {
+        if (key==null){
             return 0;
         }
-        return Math.abs(hashCode % context.length);
+        return Math.abs(key.hashCode() % context.length);
     }
 
     private void resize() {
@@ -141,9 +174,16 @@ public class MyMap<K, V> {
 
 
         context = new Entry[size + 10];
+        int tempIndex;
         for (int i=0;i<oldLength;i++){
-           // int tempIndex = Math.abs(temp[i].key.hashCode() % oldLength);
-            context[calculateIndex(temp[i].key.hashCode())]=temp[Math.abs(temp[i].key.hashCode() % oldLength)];
+           // if (temp[i].key!=null) {
+            if (temp[i].key==null){
+                tempIndex=0;
+            } else {
+                tempIndex = Math.abs(temp[i].key.hashCode() % oldLength);
+            }
+                context[calculateIndex(temp[i].key)] = temp[tempIndex];
+           // }
 
         }
         System.gc();
