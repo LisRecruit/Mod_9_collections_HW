@@ -52,4 +52,8 @@ public class MyStack <T>{
         System.gc();
     }
 
+    public int size (){
+        return size;
+    }
+
 }
