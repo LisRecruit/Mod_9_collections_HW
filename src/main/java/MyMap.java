@@ -34,26 +34,33 @@ public class MyMap<K, V> {
         if (key == null){
            if (context[index]==null){
                context[index] = newEntry;
+               size++;
            } else {
                Entry<K, V> current = context[index];
 
                do {
 
                    if (current.key==null) {
-                       current.value = value;
-                       //current.bucketIndex=index;
-
-                       return;
+                       if (current.value==null) {
+                           current.value = value;
+                           //current.bucketIndex=index;
+                            size++;
+                           return;
+                       } else {
+                           current.value = value;
+                           return;
+                       }
                    }
                    if (current.next == null) {
                        current.next = newEntry;
+                       size++;
                        //current.next.bucketIndex=index;
                    }
                    current = current.next;
 
                } while (current != null);
            }
-           size++;
+
            return;
         }
 
@@ -73,7 +80,7 @@ public class MyMap<K, V> {
                 if (current.key!=null && current.key.equals(key)) {
                     current.value = value;
                     //current.bucketIndex=index;
-                    return;
+                  //  return;
                 }
                 if (current.next == null) {
                     current.next = newEntry;
@@ -88,6 +95,7 @@ public class MyMap<K, V> {
 
 
         size++;
+
         System.gc();
     }
 
@@ -134,6 +142,29 @@ public class MyMap<K, V> {
 
     public void remove(K key) {
         int index = calculateIndex(key);
+
+        if (key == null){
+
+                Entry<K, V> current = context[0];
+                Entry<K, V> previous = null;
+                while (current != null) {
+                    if (current.key==null) {
+                        if (previous == null) {
+                            context[index] = current.next;
+                        } else {
+                            previous.next = current.next;
+                        }
+                        context[index] = current.next;
+                        break;
+                    }
+                    previous = current;
+                    current = current.next;
+                }
+            size--;
+            return;
+        }
+
+
 
         if (context[index].equals(key)) {
             context[index] = null;

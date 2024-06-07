@@ -35,24 +35,24 @@ public class Main {
 //        Employees emptyEmp=null;
 //        newList.put(null,emptyEmp);
 //        System.out.println(newList.get(null));
-        String a = "First string";
-        String b = "Next string is Null";
-        String c = "let's make this null";
-        String d = "This is not a \"c\"";
-        String q = "qq";
-        MyMap<Character, String> checkNull=new MyMap<>();
-
-        checkNull.put('a', a);
-        checkNull.put('b', b);
-        checkNull.put(null, c);
-        checkNull.put('d', d);
-
-        System.out.println(checkNull.size());
-
-        System.out.println(checkNull.get('a'));
-        System.out.println(checkNull.get(null));
-        System.out.println(checkNull.get('c'));
-        System.out.println(checkNull.get('d'));
+//        String a = "First string";
+//        String b = "Next string is Null";
+//        String c = "let's make this null";
+//        String d = "This is not a \"c\"";
+//        String q = "qq";
+//        MyMap<Character, String> checkNull=new MyMap<>();
+//
+//        checkNull.put('a', a);
+//        checkNull.put('b', b);
+//        checkNull.put(null, c);
+//        checkNull.put('d', d);
+//
+//        System.out.println(checkNull.size());
+//
+//        System.out.println(checkNull.get('a'));
+//        System.out.println(checkNull.get(null));
+//        System.out.println(checkNull.get('c'));
+//        System.out.println(checkNull.get('d'));
 //
 //        checkNull.put('c',null);
 //        System.out.println("++++++++++");
@@ -65,8 +65,30 @@ public class Main {
 //        System.out.println(qq.hashCode()%7);
 //        System.out.println(ww.hashCode()%7);
 
+        MyMap<String, Integer> mm = new MyMap<>();
+        System.out.println("0 size "+mm.size()); //0
+        mm.put("0", 0);
+        System.out.println("size 1 "+mm.size()); //1
+        mm.put("1", 1);
+        System.out.println("size 2 " +mm.size()); //2
+        mm.put("1", 11);
+        System.out.println("size 2 " +mm.size()); //2
+        mm.put("0", null);
+        System.out.println("size 2 " +mm.size()); //2
+        mm.put(null, -1111);
+        System.out.println("size 3 " +mm.size()); //3
+        mm.put(null, -2222);
+        System.out.println("size 3 " +mm.size()); //3
+        System.out.println("Should be '11': " + mm.get("1"));;
+        mm.remove("1");
+        System.out.println("Should be 'null': " + mm.get("0"));
+        System.out.println(mm.size());
+        System.out.println("Should be '-2222': " + mm.get(null));
 
-
+        System.out.println(mm.size());
+        mm.remove(null);
+        //System.out.println("should be null " + mm.get(null));
+        System.out.println(mm.size());
 
     }
 
