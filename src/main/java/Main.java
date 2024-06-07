@@ -87,7 +87,7 @@ public class Main {
 
         System.out.println(mm.size());
         mm.remove(null);
-        //System.out.println("should be null " + mm.get(null));
+        //System.out.println("should be null " + mm.get(null));/
         System.out.println(mm.size());
 
     }
