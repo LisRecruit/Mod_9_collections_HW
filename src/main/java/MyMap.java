@@ -140,8 +140,9 @@ public class MyMap<K, V> {
         return size;
     }
 
-    public void remove(K key) {
+    public void remove (K key) {
         int index = calculateIndex(key);
+    try {
 
         if (key == null){
 
@@ -188,6 +189,10 @@ public class MyMap<K, V> {
 
 
         }
+
+    } catch (NullPointerException ex){
+        return;
+    }
         size--;
     }
 

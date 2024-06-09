@@ -84,7 +84,7 @@ public class Main {
         System.out.println("Should be 'null': " + mm.get("0"));
         System.out.println(mm.size());
         System.out.println("Should be '-2222': " + mm.get(null));
-
+        mm.remove("wer");
         System.out.println(mm.size());
         mm.remove(null);
         //System.out.println("should be null " + mm.get(null));/
